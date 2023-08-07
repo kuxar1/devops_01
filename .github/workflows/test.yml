@@ -15,7 +15,7 @@ jobs:
         - uses: actions/checkout@v2
         - name: Unit testing
           run: python3 test.py
-        - run: echo ${{vars.GITHUB_ACTION_PATH}}
+        - run: echo "${{vars.GITHUB_ACTION_PATH}}"
         - run: ls -la
     
         # - name: Lint

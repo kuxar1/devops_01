@@ -10,12 +10,14 @@ jobs:
         - name: Linting
           run: pylint *.py
     unit_testing:
-        needs: linting
         runs-on: ubuntu-latest
         steps:
+        - uses: actions/checkout@v2
         - name: Unit testing
           run: python3 test.py
-        
+        - run: pwd
+        - run: ls -la
+    
         # - name: Lint
         # uses: gabriel-milan/action-pylint@v1
         # with:

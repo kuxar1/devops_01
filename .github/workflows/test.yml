@@ -18,7 +18,7 @@ jobs:
             echo "Repository: ${{ github.repository }}"
         - name: Unit testing
           run: python3 test.py
-        - run: mkdir -p ${{ github.GITHUB_WORKSPACE }}/rpmbuild/SOURCES ${{ github.GITHUB_WORKSPACE }}/rpmbuild/SPECS
+        - run: sudo mkdir -p ${{ github.workspace }}/rpmbuild/SOURCES ${{ github.workspace }}/rpmbuild/SPECS
         - run: ls -la
 
 

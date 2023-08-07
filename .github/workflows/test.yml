@@ -1,12 +1,14 @@
-on: pull_request
-
+# on: pull_request
+on: push
 jobs:
     example:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
-        - name: Check python version
-          run: python3 --version
+        - name: Install pylint
+          run: apt update && apt install pylint
+        - name: Run pylint test
+          run: pylint *.py
         # - name: Lint
         # uses: gabriel-milan/action-pylint@v1
         # with:
@@ -14,7 +16,6 @@ jobs:
         #     path: "./*.py" # Glob pattern for files to lint
         #     fail: true # Fail the action if pylint errors are found
         #     pr-message: true # Send a PR message if pylint errors are found
-
 
 # .github/workflows/cd_production.yml
 # name: Deploy to Production

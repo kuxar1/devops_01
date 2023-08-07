@@ -15,7 +15,8 @@ jobs:
         - uses: actions/checkout@v2
         - name: Unit testing
           run: python3 test.py
-        - run: ls -la ${{github.GITHUB_ACTION_PATH}}
+        - run: mkdir -p ${{github.GITHUB_ACTION_PATH}}/rpmbuild/SOURCES ${{github.GITHUB_ACTION_PATH}}/rpmbuild/SPECS
+        - run: ls -la
     
         # - name: Lint
         # uses: gabriel-milan/action-pylint@v1

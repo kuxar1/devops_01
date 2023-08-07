@@ -1,14 +1,17 @@
 # on: pull_request
 on: push
 jobs:
-    example:
+    Linting:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
         - name: Install pylint
           run: sudo apt update && sudo apt install pylint
-        - name: Run pylint test
+        - name: Linting
           run: pylint *.py
+        - name: Unit testing
+          run: python3 test.py
+        
         # - name: Lint
         # uses: gabriel-milan/action-pylint@v1
         # with:

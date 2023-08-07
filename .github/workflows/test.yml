@@ -6,7 +6,7 @@ jobs:
         steps:
         - uses: actions/checkout@v2
         - name: Install pylint
-          run: apt update && apt install pylint
+          run: sudo apt update && sudo apt install pylint
         - name: Run pylint test
           run: pylint *.py
         # - name: Lint

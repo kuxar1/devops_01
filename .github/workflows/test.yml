@@ -1,10 +1,9 @@
-# on: pull_request
 on: push
 jobs:
     linting:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
         - name: Install pylint
           run: sudo apt update && sudo apt install pylint
         - name: Linting
@@ -12,57 +11,23 @@ jobs:
     unit_testing:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
         - name: Unit testing
           run: python3 test.py
     create_package:
         needs: [linting, unit_testing]
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
         - name: Install rpm for ubuntu
           run: sudo apt update && sudo apt install rpm -y
         - name: Rename python script
           run: mv hello_world.py hello_world
         - name: Create a rpm package
           run:  rpmbuild -ba --build-in-place --define "_topdir $(pwd)/rpm" hello_world.spec
-        - name: List package
-          run: ls -la rpm/SRPMS/noarch
-
-        # - name: Lint
-        # uses: gabriel-milan/action-pylint@v1
-        # with:
-        #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}} # GitHub token
-        #     path: "./*.py" # Glob pattern for files to lint
-        #     fail: true # Fail the action if pylint errors are found
-        #     pr-message: true # Send a PR message if pylint errors are found
-
-# .github/workflows/cd_production.yml
-# name: Deploy to Production
-# on:
-#   push:
-#     branches: [ main ]
-# jobs:
-#   build_and_test:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Use Node.js
-#       uses: actions/setup-node@v1
-#       with:
-#         node-version: 12
-#     - name: Install Dependencies
-#       run: npm ci
-#     - name: Run Tests
-#       run: npm test
-#   deploy:
-#     needs: build_and_test
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Deploy to Production
-#       uses: Azure/webapps-deploy@v2
-#       with:
-#         app-name: 'your-app-name'
-#         slot-name: 'production'
-#         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-#         package: .
+        - name: Check package
+          run: ls -la rpm/RPMS/noarch
+        - uses: actions/upload-artifact@v3
+          with:
+            name: hello_world.rpm
+            path: rpm/RPMS/noarch/hello_world-1.0-1.noarch.rpm

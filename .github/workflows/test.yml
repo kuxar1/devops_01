@@ -20,7 +20,9 @@ jobs:
         steps:
         - uses: actions/checkout@v2
         - name: Install rpm for ubuntu
-          run: sudo apt install rpm -y
+          run: sudo apt update && sudo apt install rpm -y
+        - name: Check if rpm installed
+          run: apt list --installed | grep rpm
         - name: Rename python script
           run: mv hello_world.py hello_world
         - name: Create a rpm packege

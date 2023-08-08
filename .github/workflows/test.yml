@@ -19,6 +19,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
+        - name: ls
+          run: ls -la
         - name: Install rpm for ubuntu
           run: sudo apt update && sudo apt install rpm -y
         - name: Check if rpm installed
@@ -29,7 +31,6 @@ jobs:
           run:  rpmbuild -ba --build-in-place --define "_topdir $(pwd)/rpm" hello_world.spec
         - name: List package
           run: ls -la rpm/SRPMS/
-
 
         # - name: Lint
         # uses: gabriel-milan/action-pylint@v1

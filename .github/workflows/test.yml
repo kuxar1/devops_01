@@ -1,36 +1,33 @@
 # on: pull_request
 on: push
 jobs:
-    # linting:
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #     - uses: actions/checkout@v2
-    #     - name: Install pylint
-    #       run: sudo apt update && sudo apt install pylint
-    #     - name: Linting
-    #       run: pylint *.py
-    # unit_testing:
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #     - uses: actions/checkout@v2
-    #     - name: Unit testing
-    #       run: python3 test.py
-    create_package:
+    linting:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
-        - name: ls
-          run: ls -la
+        - name: Install pylint
+          run: sudo apt update && sudo apt install pylint
+        - name: Linting
+          run: pylint *.py
+    unit_testing:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Unit testing
+          run: python3 test.py
+    create_package:
+        needs: [linting, unit_testing]
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
         - name: Install rpm for ubuntu
           run: sudo apt update && sudo apt install rpm -y
-        - name: Check if rpm installed
-          run: apt list --installed | grep rpm
         - name: Rename python script
           run: mv hello_world.py hello_world
-        - name: Create a rpm packege
+        - name: Create a rpm package
           run:  rpmbuild -ba --build-in-place --define "_topdir $(pwd)/rpm" hello_world.spec
         - name: List package
-          run: ls -la rpm/SRPMS/
+          run: ls -la rpm/SRPMS/noarch
 
         # - name: Lint
         # uses: gabriel-milan/action-pylint@v1

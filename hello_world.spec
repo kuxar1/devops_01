@@ -1,4 +1,4 @@
-Name:       helloworld
+Name:       hello_world
 Version:    1.0
 Release:    1%{?dist}
 Summary:    Hello World

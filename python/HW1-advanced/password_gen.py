@@ -9,7 +9,7 @@ spec_symbols = string.punctuation
 print("Welcome to the Linux User Password Generator!")
 try:
     length = int(input("Please enter the desired password length: "))
-    if length < 4:
+    if length <= 4:
         print("Length should be at least 4.")
         exit()
 

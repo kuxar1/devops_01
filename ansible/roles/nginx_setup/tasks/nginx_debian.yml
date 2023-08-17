@@ -1,6 +1,8 @@
 - name: Ensure that nginx installed
   ansible.builtin.apt:
-    name: nginx
+    name: 
+      - nginx
+      - ufw
     state: present
     update_cache: yes
     cache_valid_time: 3600

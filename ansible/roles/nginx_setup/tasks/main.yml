@@ -12,9 +12,30 @@
 - include_tasks: nginx_debian.yml
   when: ansible_os_family == 'Debian'
 
-
 - name: Ensure that nginx started and enabled
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: true
+
+- name: Ensure that ufw started
+  ansible.builtin.service:
+    name: ufw
+    state: started
+    enabled: true
+
+- name: Ensure that allowed SSH traffic
+  ansible.builtin.ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+
+- name: Ensure that allow HTTP traffic
+  ansible.builtin.ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+
+- name: Ensure enable UFW
+  ansible.builtin.ufw:
+    state: enabled

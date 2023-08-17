@@ -2,24 +2,5 @@
 - name: Setup nginx server
   hosts: web-servers
   become: true
-  tasks:
-    - name: Ensure that connectiviry to servers exist
-      ansible.builtin.ping:
-    
-    - name: Ensure that webadmin user exist
-      ansible.builtin.user:
-        name: webadmin
-        state: present
-    
-    - name: Ensure that nginx installed
-      ansible.builtin.apt:
-        name: nginx
-        state: present
-        update_cache: yes
-        cache_valid_time: 3600
-    
-    - name: Ensure that nginx started and enabled
-      ansible.builtin.service:
-        name: nginx
-        state: started
-        enabled: true
+  roles:
+    - name: nginx_setup

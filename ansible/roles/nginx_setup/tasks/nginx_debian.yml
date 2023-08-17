@@ -1,0 +1,15 @@
+- name: Ensure that nginx installed
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Ensure html file copied to nginx default root directory
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload nginx

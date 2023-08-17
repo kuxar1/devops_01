@@ -1,0 +1,20 @@
+- name: Ensure that connectiviry to servers exist
+  ansible.builtin.ping:
+
+- name: Ensure that webadmin user exist
+  ansible.builtin.user:
+    name: webadmin
+    state: present
+
+- include_tasks: nginx_redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: nginx_debian.yml
+  when: ansible_os_family == 'Debian'
+
+
+- name: Ensure that nginx started and enabled
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
